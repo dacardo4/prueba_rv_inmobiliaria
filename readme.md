@@ -32,11 +32,15 @@
 > mysql -h bcpk28grusebpx8cnq5n-mysql.services.clever-cloud.com -P 3306 -u uhjedx6hqsxfe1gg -p bcpk28grusebpx8cnq5n
 
 ## Backend - (Node con framework loopback v4)
-### Para correr el back:
 > cd api-rv-inmobiliaria
+### Instaklar dependencias
+> npm i
+### Para correr el back:
 > npm start
 
 ## Frontend - (Angular)
-### Para ejecutar el front:
 > cd front-RVInmobiliaria
+### Instaklar dependencias
+> npm i
+### Para ejecutar el front:
 > ng serve
