@@ -1,0 +1,66 @@
+<container-element [ngSwitch]="secctionToShow">
+  <div *ngSwitchCase="1">
+    <div class="row px-0 mx-0">
+      <div class="col-9 px-0">
+        <span class="appTitle">Actualizar inmueble</span><br>
+      </div>
+      <div class="col-3 px-0">
+        <div class="text-right">
+          <button class="myBtnGen" (click)="secctionToShow = 0">Cancelar</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <updateInmueble [inmueble]="inmuebleToEdit" (finalAnswer)="getAnswer($event)"></updateInmueble>
+  </div>
+  <div *ngSwitchDefault>
+    <div class="my-3">
+      <span class="appTitle">Lista de Inmuebles</span><br>
+    </div>
+    <div *ngIf="listInmuebles.length > 0; else listEmpty">
+      <div class="my-3" *ngIf="listInmuebles.length > 0">
+        <div class="form-group">
+          <label for="buscardor" class="mb-1">Buscar</label>
+          <input class="w-100 form-control" id="buscardor" type="text" [(ngModel)]="filtroBuscador" (change)="filtrarListaInmuebles()" placeholder="Buscar">
+        </div>
+      </div>
+      <div *ngIf="listInmueblesFiltrada.length > 0; else notMatch">
+        <table class="table table-hover mt-3">
+          <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">Código inmueble</th>
+              <th scope="col">Dirección</th>
+              <th scope="col">Teléfono</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listInmueblesFiltrada | paginate: { itemsPerPage: 5, currentPage: page }; index as i">
+              <th scope="row">{{ i+1 }}</th>
+              <td class="text-justify">{{ item.codigo_inmueble }}</td>
+              <td class="text-justify">{{ item.direccion }}</td>
+              <td class="text-justify">{{ item.telefono }}</td>
+              <td class="text-justify">
+                <i class="fa fa-edit" (click)="goToEdit(item)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-center">
+          <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+        </div>
+      </div>
+      <ng-template #notMatch>
+        <div class="alert alert-warning" role="alert">
+          <span>No hay coincidencias</span>
+        </div>
+      </ng-template>
+    </div>
+    <ng-template #listEmpty>
+      <div class="alert alert-warning" role="alert">
+        <span>No hay Inmuebles registrados</span>
+      </div>
+    </ng-template>
+  </div>
+</container-element>

@@ -1,0 +1,196 @@
+<container-element [ngSwitch]="secctionToShow">
+  <div *ngSwitchCase="1">
+    <div class="row px-0 mx-0">
+      <div class="col-9 px-0">
+        <span class="appTitle">Actualizar Pais</span><br>
+      </div>
+      <div class="col-3 px-0">
+        <div class="text-right">
+          <button class="myBtnGen" (click)="secctionToShow = 0">Cancelar</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <updatePais [pais]="paisToEdit" (finalAnswer)="getAnswer($event)"></updatePais>
+  </div>
+  <div *ngSwitchCase="2">
+    <div class="row px-0 mx-0">
+      <div class="col-9 px-0">
+        <span class="appTitle">Actualizar Departamento</span><br>
+      </div>
+      <div class="col-3 px-0">
+        <div class="text-right">
+          <button class="myBtnGen" (click)="secctionToShow = 0">Cancelar</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <updateDepartamento [departamento]="dptoToEdit" (finalAnswer)="getAnswer($event)"></updateDepartamento>
+  </div>
+  <div *ngSwitchCase="3">
+    <div class="row px-0 mx-0">
+      <div class="col-9 px-0">
+        <span class="appTitle">Actualizar Ciudad</span><br>
+      </div>
+      <div class="col-3 px-0">
+        <div class="text-right">
+          <button class="myBtnGen" (click)="secctionToShow = 0">Cancelar</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <updateCiudad [ciudad]="ciudadToEdit" (finalAnswer)="getAnswer($event)"></updateCiudad>
+  </div>
+  <div *ngSwitchDefault class="mb-5 pb-5">
+    <div> <!-- Paises -->
+      <div class="my-3">
+        <span class="appTitle">Lista de Paises</span><br>
+      </div>
+      <div *ngIf="listPaises.length > 0; else listPaisesEmpty">
+        <div class="my-3" *ngIf="listPaises.length > 0">
+          <div class="form-group">
+            <label for="buscardor" class="mb-1">Buscar</label>
+            <input class="w-100 form-control" id="buscardor" type="text" [(ngModel)]="filtroBuscadorPais" (change)="filtrarListas('pais')" placeholder="Buscar">
+          </div>
+        </div>
+        <div *ngIf="listPaisesFiltrada.length > 0; else notMatch">
+          <table class="table table-hover mt-3">
+            <thead>
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Código</th>
+                <th scope="col">Nombre</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of listPaisesFiltrada | paginate: { itemsPerPage: 5, currentPage: pagePaises, id: 'pais' }; index as i">
+                <th scope="row">{{ i+1 }}</th>
+                <td class="text-justify">{{ item.codigo_pais }}</td>
+                <td class="text-justify">{{ item.nombre_pais }}</td>
+                <td class="text-justify">
+                  <i class="fa fa-edit" (click)="goToEdit('pais',item)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-center">
+            <pagination-controls (pageChange)="pagePaises = $event" previousLabel="Anterior" nextLabel="Siguiente" id="pais"></pagination-controls>
+          </div>
+        </div>
+        <ng-template #notMatch>
+          <div class="alert alert-warning" role="alert">
+            <span>No hay coincidencias</span>
+          </div>
+        </ng-template>
+      </div>
+      <ng-template #listPaisesEmpty>
+        <div class="alert alert-warning" role="alert">
+          <span>No hay paises registrados</span>
+        </div>
+      </ng-template>
+    </div>
+    <div> <!-- Dpto -->
+      <div class="my-3">
+        <span class="appTitle">Lista de Departamentos</span><br>
+      </div>
+      <div *ngIf="listDpto.length > 0; else listDptosEmpty">
+        <div class="my-3" *ngIf="listDpto.length > 0">
+          <div class="form-group">
+            <label for="buscardorDpto" class="mb-1">Buscar</label>
+            <input class="w-100 form-control" id="buscardorDpto" type="text" [(ngModel)]="filtroBuscadorDpto" (change)="filtrarListas('dpto')" placeholder="Buscar">
+          </div>
+        </div>
+        <div *ngIf="listDptoFiltrada.length > 0; else notMatchDpto">
+          <table class="table table-hover mt-3">
+            <thead>
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Código</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">País</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of listDptoFiltrada | paginate: { itemsPerPage: 5, currentPage: pageDpto, id: 'dpto' }; index as i">
+                <th scope="row">{{ i+1 }}</th>
+                <td class="text-justify">{{ item.codigo_depto }}</td>
+                <td class="text-justify">{{ item.nombre_depto }}</td>
+                <td class="text-justify">{{ item.miPaisEs.nombre_pais }}</td>
+                <td class="text-justify">
+                  <i class="fa fa-edit" (click)="goToEdit('dpto',item)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-center">
+            <pagination-controls (pageChange)="pageDpto = $event" previousLabel="Anterior" nextLabel="Siguiente" id="dpto"></pagination-controls>
+          </div>
+        </div>
+        <ng-template #notMatchDpto>
+          <div class="alert alert-warning" role="alert">
+            <span>No hay coincidencias</span>
+          </div>
+        </ng-template>
+      </div>
+      <ng-template #listDptosEmpty>
+        <div class="alert alert-warning" role="alert">
+          <span>No hay departamentos registrados</span>
+        </div>
+      </ng-template>
+    </div>
+    <div> <!-- Paises -->
+      <div class="my-3">
+        <span class="appTitle">Lista de Ciudades</span><br>
+      </div>
+      <div *ngIf="listCiudad.length > 0; else listCiudadesEmpty">
+        <div class="my-3" *ngIf="listCiudad.length > 0">
+          <div class="form-group">
+            <label for="buscardorCiudad" class="mb-1">Buscar</label>
+            <input class="w-100 form-control" id="buscardorCiudad" type="text" [(ngModel)]="filtroBuscadorCiudad" (change)="filtrarListas('ciudad')" placeholder="Buscar">
+          </div>
+        </div>
+        <div *ngIf="listCiudadFiltrada.length > 0; else notMatch">
+          <table class="table table-hover mt-3">
+            <thead>
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Código</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Departamento</th>
+                <th scope="col">País</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of listCiudadFiltrada | paginate: { itemsPerPage: 5, currentPage: pageCiudad, id: 'ciudad' }; index as i">
+                <th scope="row">{{ i+1 }}</th>
+                <td class="text-justify">{{ item.codigo_ciudad }}</td>
+                <td class="text-justify">{{ item.nombre_ciudad }}</td>
+                <td class="text-justify">{{ item.seEncuentraEn.nombre_depto }}</td>
+                <td class="text-justify">{{ item.seEncuentraEn.miPaisEs.nombre_pais }}</td>
+                <td class="text-justify">
+                  <i class="fa fa-edit" (click)="goToEdit('ciudad',item)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-center">
+            <pagination-controls (pageChange)="pageCiudad = $event" previousLabel="Anterior" nextLabel="Siguiente" id="ciudad"></pagination-controls>
+          </div>
+        </div>
+        <ng-template #notMatch>
+          <div class="alert alert-warning" role="alert">
+            <span>No hay coincidencias</span>
+          </div>
+        </ng-template>
+      </div>
+      <ng-template #listCiudadesEmpty>
+        <div class="alert alert-warning" role="alert">
+          <span>No hay paises registrados</span>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</container-element>

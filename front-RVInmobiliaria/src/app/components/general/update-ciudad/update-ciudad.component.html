@@ -1,0 +1,55 @@
+<div class="mt-3"> <!-- FORMULARIO -->
+  <form novalidate [formGroup]="ciudadForm" (ngSubmit)="submitForm($event)" class="mb-5 px-3 px-sm-0">
+    <div><!-- codigo_ciudad -->
+      <div class="form-group">
+        <label for="codigo_ciudad" class="mb-1">Código de la ciudad</label>
+        <input formControlName="codigo_ciudad" type="text" class="form-control" id="codigo_ciudad" placeholder="Código de la ciudad" [class.is-valid]="getIsValid(ciudadForm,'codigo_ciudad')" [class.is-invalid]="getIsInvalid(ciudadForm,'codigo_ciudad')">
+      </div>
+      <div *ngIf="getPropertyHasErrors(ciudadForm,'codigo_ciudad')" class="mb-1">
+        <span *ngIf="getPropertyErrors(ciudadForm,'codigo_ciudad','required')" class="alert-danger form-control">Ingresar código de la ciudad</span>
+        <span *ngIf="getPropertyErrors(ciudadForm,'codigo_ciudad','maxlength')" class="alert-danger form-control">Máximo 5 Caracteres</span>
+      </div>
+    </div>
+    <div><!-- paisTemp -->
+      <div class="form-group">
+        <label for="paisTemp">País</label><br>
+        <select class="custom-select w-100" formControlName="paisTemp" id="paisTemp" (change)="onChangeSelectLocation(1, $event.target.value)" [class.is-valid]="getIsValid(ciudadForm,'paisTemp')" [class.is-invalid]="getIsInvalid(ciudadForm,'paisTemp')">
+          <option selected>Seleccione</option>
+          <option *ngFor="let item of listPais" value="{{item.id_pais}}">{{ item.codigo_pais }}-{{item.nombre_pais }}</option>
+        </select>
+      </div>
+      <div *ngIf="getPropertyHasErrors(ciudadForm,'paisTemp')" class="mb-1">
+        <span *ngIf="getPropertyErrors(ciudadForm,'paisTemp','isSelectSelected')" class="alert-danger form-control">Seleccione País</span>
+      </div>
+    </div>
+    <div><!-- codigo_depto -->
+      <div class="form-group">
+        <label for="codigo_depto">Departamento</label><br>
+        <select class="custom-select w-100" formControlName="codigo_depto" id="codigo_depto" [class.is-valid]="getIsValid(ciudadForm,'codigo_depto')" [class.is-invalid]="getIsInvalid(ciudadForm,'codigo_depto')">
+          <option selected>Seleccione</option>
+          <option *ngFor="let item of listDptosFiltered" value="{{item.id_depto}}">{{ item.codigo_depto }}-{{item.nombre_depto }}</option>
+        </select>
+      </div>
+      <div *ngIf="getPropertyHasErrors(ciudadForm,'codigo_depto')" class="mb-1">
+        <span *ngIf="getPropertyErrors(ciudadForm,'codigo_depto','isSelectSelected')" class="alert-danger form-control">Seleccione departamento</span>
+      </div>
+    </div>
+    <div><!-- nombre_ciudad -->
+      <div class="form-group">
+        <label for="nombre_ciudad" class="mb-1">Nombre de la ciudad</label>
+        <input formControlName="nombre_ciudad" type="text" class="form-control" id="nombre_ciudad" placeholder="Nombre de la ciudad" [class.is-valid]="getIsValid(ciudadForm,'nombre_ciudad')" [class.is-invalid]="getIsInvalid(ciudadForm,'nombre_ciudad')">
+      </div>
+      <div *ngIf="getPropertyHasErrors(ciudadForm,'nombre_ciudad')" class="mb-1">
+        <span *ngIf="getPropertyErrors(ciudadForm,'nombre_ciudad','required')" class="alert-danger form-control">Ingresar Nombre de la ciudad</span>
+        <span *ngIf="getPropertyErrors(ciudadForm,'nombre_ciudad','maxlength')" class="alert-danger form-control">Máximo 20 Caracteres</span>
+      </div>
+    </div>
+    <div class="my-3" *ngIf="saveOk['ciudad']">
+      <span class="alert-success form-control">Los datos se han guardado</span>
+    </div>
+    <div class="text-center my-3">
+      <button class="myBtnGen">Guardar</button>
+    </div>
+    <hr>
+  </form>
+</div>

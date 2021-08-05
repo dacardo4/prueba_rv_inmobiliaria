@@ -1,0 +1,81 @@
+<div>
+  <span class="appTitle">Registrar Inmueble</span><br>
+</div>
+<div class="mt-2">
+  <span *ngIf="listCiudad.length == 0" class="alert-danger form-control">No hay ciudades registradas</span>
+  <span *ngIf="listDptos.length == 0" class="alert-danger form-control">No hay departamentos registrados</span>
+  <span *ngIf="listPais.length == 0" class="alert-danger form-control">No hay paises registrados</span>
+</div>
+<hr>
+<div> <!-- FORMULARIO -->
+  <form novalidate [formGroup]="inmuebleForm" (ngSubmit)="submitInmuebleForm($event)" class="mb-5 px-3 px-sm-0">
+    <div><!-- codigo_inmueble -->
+      <div class="form-group">
+        <label for="codigo_inmueble" class="mb-1">Código del inmueble</label>
+        <input formControlName="codigo_inmueble" type="text" class="form-control" id="codigo_inmueble" placeholder="Código del inmueble" [class.is-valid]="getIsValid(inmuebleForm,'codigo_inmueble')" [class.is-invalid]="getIsInvalid(inmuebleForm,'codigo_inmueble')">
+      </div>
+      <div *ngIf="getPropertyHasErrors(inmuebleForm,'codigo_inmueble')" class="mb-1">
+        <span *ngIf="getPropertyErrors(inmuebleForm,'codigo_inmueble','required')" class="alert-danger form-control">Ingresar código del inmueble</span>
+        <span *ngIf="getPropertyErrors(inmuebleForm,'codigo_inmueble','maxlength')" class="alert-danger form-control">Máximo 10 Caracteres</span>
+      </div>
+    </div>
+    <div><!-- direccion -->
+      <div class="form-group">
+        <label for="direccion" class="mb-1">Dirección</label>
+        <input formControlName="direccion" type="text" class="form-control" id="direccion" placeholder="Dirección" [class.is-valid]="getIsValid(inmuebleForm,'direccion')" [class.is-invalid]="getIsInvalid(inmuebleForm,'direccion')">
+      </div>
+      <div *ngIf="getPropertyHasErrors(inmuebleForm,'direccion')" class="mb-1">
+        <span *ngIf="getPropertyErrors(inmuebleForm,'direccion','required')" class="alert-danger form-control">Ingresar dirección</span>
+        <span *ngIf="getPropertyErrors(inmuebleForm,'direccion','maxlength')" class="alert-danger form-control">Máximo 50 Caracteres</span>
+      </div>
+    </div>
+    <div><!-- telefono -->
+      <div class="form-group">
+        <label for="telefono" class="mb-1">Teléfono</label>
+        <input formControlName="telefono" type="number" class="form-control" id="telefono" placeholder="Teléfono" [class.is-valid]="getIsValid(inmuebleForm,'telefono')" [class.is-invalid]="getIsInvalid(inmuebleForm,'telefono')">
+      </div>
+      <div *ngIf="getPropertyHasErrors(inmuebleForm,'telefono')" class="mb-1">
+        <span *ngIf="getPropertyErrors(inmuebleForm,'telefono','required')" class="alert-danger form-control">Ingresar teléfono</span>
+        <span *ngIf="getPropertyErrors(inmuebleForm,'telefono','max')" class="alert-danger form-control">Número invalido</span>
+        <span *ngIf="getPropertyErrors(inmuebleForm,'telefono','min')" class="alert-danger form-control">Número invalido</span>
+      </div>
+    </div>
+    <div><!-- codigo_pais -->
+      <div class="form-group">
+        <label for="codigo_pais">Seleccione país</label><br>
+        <select class="custom-select w-100" id="codigo_pais" formControlName="paisProv" (change)="onChangeSelectLocation(1, $event.target.value)" [class.is-valid]="getIsValid(inmuebleForm,'codigo_ciudad')" [class.is-invalid]="getIsInvalid(inmuebleForm,'codigo_ciudad')">
+          <option selected>Seleccione</option>
+          <option *ngFor="let item of listPais" value="{{item.id_pais}}">{{ item.codigo_pais }}-{{item.nombre_pais }}</option>
+        </select>
+      </div>
+    </div>
+    <div><!-- codigo_depto -->
+      <div class="form-group">
+        <label for="codigo_depto">Seleccione departamento</label><br>
+        <select class="custom-select w-100" id="codigo_depto" formControlName="dptoProv" (change)="onChangeSelectLocation(2, $event.target.value)" [class.is-valid]="getIsValid(inmuebleForm,'codigo_ciudad')" [class.is-invalid]="getIsInvalid(inmuebleForm,'codigo_ciudad')">
+          <option selected calue="0">Seleccione</option>
+          <option *ngFor="let item of listDptosFiltered" value="{{item.id_depto}}">{{ item.codigo_depto }}-{{item.nombre_depto }}</option>
+        </select>
+      </div>
+    </div>
+    <div><!-- codigo_ciudad -->
+      <div class="form-group">
+        <label for="codigo_ciudad">Seleccione ciudad</label><br>
+        <select class="custom-select w-100" formControlName="codigo_ciudad" id="codigo_ciudad" [class.is-valid]="getIsValid(inmuebleForm,'codigo_ciudad')" [class.is-invalid]="getIsInvalid(inmuebleForm,'codigo_ciudad')">
+          <option selected>Seleccione</option>
+          <option *ngFor="let item of listCiudadFiltered" value="{{item.id_ciudad}}">{{ item.codigo_ciudad }}-{{item.nombre_ciudad }}</option>
+        </select>
+      </div>
+      <div *ngIf="getPropertyHasErrors(inmuebleForm,'codigo_ciudad')" class="mb-1">
+        <span *ngIf="getPropertyErrors(inmuebleForm,'codigo_ciudad','isSelectSelected')" class="alert-danger form-control">Seleccione país, departamento y/o ciudad</span>
+      </div>
+    </div>
+    <div class="my-3" *ngIf="saveOk">
+      <span class="alert-success form-control">Los datos se han guardado</span>
+    </div>
+    <div class="text-center my-3">
+      <button class="myBtnGen">Guardar</button>
+    </div>
+    <hr>
+  </form>
+</div>

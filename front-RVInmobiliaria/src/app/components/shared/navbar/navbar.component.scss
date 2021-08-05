@@ -1,0 +1,34 @@
+nav {
+    background-color: var(--navbar_bg) !important;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+a {
+    color: var(--navbar_tx);
+    font-weight: 500;
+}
+
+.nav-link {
+    font-size: 0.9rem;
+}
+
+.active a {
+    color: var(--navbar_tx_sl) !important;
+    font-weight: 500;
+}
+
+@media (max-width: 576px) {
+    .nav {
+        display: block;
+    }
+}
+
+.dropdown-menu {
+    background-color: #63AE00 !important;
+}
+
+.dropdown-menu.show {
+    width: 14rem;
+}

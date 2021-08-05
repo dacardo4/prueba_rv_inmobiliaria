@@ -1,0 +1,31 @@
+<div class="mt-3"> <!-- FORMULARIO -->
+  <form novalidate [formGroup]="paisForm" (ngSubmit)="submitForm($event)" class="mb-5 px-3 px-sm-0">
+    <div><!-- codigo_pais -->
+      <div class="form-group">
+        <label for="codigo_pais" class="mb-1">Código del país</label>
+        <input formControlName="codigo_pais" type="text" class="form-control" id="codigo_pais" placeholder="Código del país" [class.is-valid]="getIsValid(paisForm,'codigo_pais')" [class.is-invalid]="getIsInvalid(paisForm,'codigo_pais')">
+      </div>
+      <div *ngIf="getPropertyHasErrors(paisForm,'codigo_pais')" class="mb-1">
+        <span *ngIf="getPropertyErrors(paisForm,'codigo_pais','required')" class="alert-danger form-control">Ingresar código del país</span>
+        <span *ngIf="getPropertyErrors(paisForm,'codigo_pais','maxlength')" class="alert-danger form-control">Máximo 2 Caracteres</span>
+      </div>
+    </div>
+    <div><!-- nombre_pais -->
+      <div class="form-group">
+        <label for="nombre_pais" class="mb-1">Nombre del país</label>
+        <input formControlName="nombre_pais" type="text" class="form-control" id="nombre_pais" placeholder="Nombre del país" [class.is-valid]="getIsValid(paisForm,'nombre_pais')" [class.is-invalid]="getIsInvalid(paisForm,'nombre_pais')">
+      </div>
+      <div *ngIf="getPropertyHasErrors(paisForm,'nombre_pais')" class="mb-1">
+        <span *ngIf="getPropertyErrors(paisForm,'nombre_pais','required')" class="alert-danger form-control">Ingresar Nombre del país</span>
+        <span *ngIf="getPropertyErrors(paisForm,'nombre_pais','maxlength')" class="alert-danger form-control">Máximo 20 Caracteres</span>
+      </div>
+    </div>
+    <div class="my-3" *ngIf="saveOk['pais']">
+      <span class="alert-success form-control">Los datos se han guardado</span>
+    </div>
+    <div class="text-center my-3">
+      <button class="myBtnGen">Guardar</button>
+    </div>
+    <hr>
+  </form>
+</div>

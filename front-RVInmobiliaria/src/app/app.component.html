@@ -1,0 +1,12 @@
+<div class="container">
+  <navbar></navbar>
+  <div class="marginTopBottomNavbar">
+    <router-outlet></router-outlet>
+  </div>
+  <myFooter></myFooter>
+  <modalSaveOk></modalSaveOk>
+</div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#fff" type = "pacman" [fullScreen] = "true">
+  <p style="color: white" > Loading... </p>
+</ngx-spinner>

@@ -1,0 +1,43 @@
+<div class="mt-3"> <!-- FORMULARIO -->
+  <form novalidate [formGroup]="dptoForm" (ngSubmit)="submitForm($event)" class="mb-5 px-3 px-sm-0">
+    <div><!-- codigo_depto -->
+      <div class="form-group">
+        <label for="codigo_depto" class="mb-1">Código del departamento</label>
+        <input formControlName="codigo_depto" type="text" class="form-control" id="codigo_depto" placeholder="Código del departamento" [class.is-valid]="getIsValid(dptoForm,'codigo_depto')" [class.is-invalid]="getIsInvalid(dptoForm,'codigo_depto')">
+      </div>
+      <div *ngIf="getPropertyHasErrors(dptoForm,'codigo_depto')" class="mb-1">
+        <span *ngIf="getPropertyErrors(dptoForm,'codigo_depto','required')" class="alert-danger form-control">Ingresar código del departamento</span>
+        <span *ngIf="getPropertyErrors(dptoForm,'codigo_depto','maxlength')" class="alert-danger form-control">Máximo 2 Caracteres</span>
+      </div>
+    </div>
+    <div><!-- codigo_pais -->
+      <div class="form-group">
+        <label for="codigo_pais">Código del país</label><br>
+        <select class="custom-select w-100" formControlName="codigo_pais" id="codigo_pais" [class.is-valid]="getIsValid(dptoForm,'codigo_pais')" [class.is-invalid]="getIsInvalid(dptoForm,'codigo_pais')">
+          <option selected>Seleccione</option>
+          <option *ngFor="let item of listPais" value="{{item.id_pais}}">{{ item.codigo_pais }}-{{item.nombre_pais }}</option>
+        </select>
+      </div>
+      <div *ngIf="getPropertyHasErrors(dptoForm,'codigo_pais')" class="mb-1">
+        <span *ngIf="getPropertyErrors(dptoForm,'codigo_pais','isSelectSelected')" class="alert-danger form-control">Seleccione código del pais</span>
+      </div>
+    </div>
+    <div><!-- nombre_depto -->
+      <div class="form-group">
+        <label for="nombre_depto" class="mb-1">Nombre del departamento</label>
+        <input formControlName="nombre_depto" type="text" class="form-control" id="nombre_depto" placeholder="Nombre del departamento" [class.is-valid]="getIsValid(dptoForm,'nombre_depto')" [class.is-invalid]="getIsInvalid(dptoForm,'nombre_depto')">
+      </div>
+      <div *ngIf="getPropertyHasErrors(dptoForm,'nombre_depto')" class="mb-1">
+        <span *ngIf="getPropertyErrors(dptoForm,'nombre_depto','required')" class="alert-danger form-control">Ingresar Nombre del departamento</span>
+        <span *ngIf="getPropertyErrors(dptoForm,'nombre_depto','maxlength')" class="alert-danger form-control">Máximo 20 Caracteres</span>
+      </div>
+    </div>
+    <div class="my-3" *ngIf="saveOk['dpto']">
+      <span class="alert-success form-control">Los datos se han guardado</span>
+    </div>
+    <div class="text-center my-3">
+      <button class="myBtnGen">Guardar</button>
+    </div>
+    <hr>
+  </form>
+</div>

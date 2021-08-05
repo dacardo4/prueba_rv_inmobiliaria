@@ -1,0 +1,42 @@
+:root {
+    --navbar_bg: white;
+    --navbar_tx: #006464;
+    --navbar_tx_sl: #ff7800;
+    --footer_bg: rgba(0, 0, 0, 0.2);
+    --txt_tit: #0646a5;
+    --btn_gen_bg_gra_ini: #31aaf0;
+    --btn_gen_bg_gra_fin: #0a27a7;
+    --btn_gen_tx: white;
+    --btn_border_radius: 10px;
+}
+
+.appTitle {
+    color: var(--txt_tit);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.myBtnGen {
+    background: -prefix-linear-gradient(top, var(--btn_gen_bg_gra_ini), var(--btn_gen_bg_gra_fin) 85%); /* la vieja sintaxis, obsoleta, pero todavía necesaria, prefijada, para Opera y Navegadores basados en Webkit */
+    background: linear-gradient(to bottom , var(--btn_gen_bg_gra_ini), var(--btn_gen_bg_gra_fin) 85%); /* La nueva sintaxis necesaria para navegadores apegados al estandar (IE 10 y Firefox 10 en adelante), sin prefijo */
+    color: var(--btn_gen_tx);
+    padding: 0.2rem;
+    border: none;
+    border-radius: var(--btn_border_radius);
+    font-size: 0.8rem;
+    width: 7rem;
+    height: 2rem;
+}
+
+.form-group {
+    margin-top: 15px;
+}
+
+i {
+    font-size: 2rem !important;
+}
+
+select {
+    padding: 6px;
+    margin-top: 4px;
+}

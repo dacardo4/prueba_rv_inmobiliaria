@@ -1,0 +1,24 @@
+<nav class="container navbar fixed-top navbar-expand-lg">
+  <div>
+    <img class="navbar-brand" width="70" alt="Magna" src="assets\logo.png" [routerLink]="['']" />
+  </div>
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="mainMenu">
+    <ul class="nav ml-auto pr-0">
+      <li class="nav-item my-auto" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+        <a class="nav-link" [routerLink]="['register/location']" data-toggle="collapse" data-target="#mainMenu">Registrar Locacion</a>
+      </li>
+      <li class="nav-item my-auto" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+        <a class="nav-link" [routerLink]="['register/inmueble']" data-toggle="collapse" data-target="#mainMenu">Registrar Inmueble</a>
+      </li>
+      <li class="nav-item my-auto" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+        <a class="nav-link" [routerLink]="['view/locations']" data-toggle="collapse" data-target="#mainMenu">Consultar Locaciones</a>
+      </li>
+      <li class="nav-item my-auto" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}">
+        <a class="nav-link" [routerLink]="['view/inmuebles']" data-toggle="collapse" data-target="#mainMenu">Consultar Inmuebles</a>
+      </li>
+    </ul>
+  </div>
+</nav>

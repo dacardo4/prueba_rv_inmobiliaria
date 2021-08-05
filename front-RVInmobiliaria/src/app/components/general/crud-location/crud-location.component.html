@@ -1,0 +1,173 @@
+<div>
+  <div class="row m-0 p-0">
+    <div class="col-1 text-center m-auto" (click)="showSection(1)">
+      <i class="fa fa-angle-down m-auto" *ngIf="formToShow != 1"></i>
+      <i class="fa fa-angle-up" *ngIf="formToShow == 1"></i>
+    </div>
+    <div class="col-11" (click)="showSection(1)">
+      <span class="appTitle">Registrar País</span><br>
+    </div>
+    <div class="col-12" *ngIf="formToShow == 1">
+      <div class="mt-3"> <!-- FORMULARIO -->
+        <form novalidate [formGroup]="paisForm" (ngSubmit)="submitAllForm($event, 'pais')" class="mb-5 px-3 px-sm-0">
+          <div><!-- codigo_pais -->
+            <div class="form-group">
+              <label for="codigo_pais" class="mb-1">Código del país</label>
+              <input formControlName="codigo_pais" type="text" class="form-control" id="codigo_pais" placeholder="Código del país" [class.is-valid]="getIsValid(paisForm,'codigo_pais')" [class.is-invalid]="getIsInvalid(paisForm,'codigo_pais')">
+            </div>
+            <div *ngIf="getPropertyHasErrors(paisForm,'codigo_pais')" class="mb-1">
+              <span *ngIf="getPropertyErrors(paisForm,'codigo_pais','required')" class="alert-danger form-control">Ingresar código del país</span>
+              <span *ngIf="getPropertyErrors(paisForm,'codigo_pais','maxlength')" class="alert-danger form-control">Máximo 2 Caracteres</span>
+            </div>
+          </div>
+          <div><!-- nombre_pais -->
+            <div class="form-group">
+              <label for="nombre_pais" class="mb-1">Nombre del país</label>
+              <input formControlName="nombre_pais" type="text" class="form-control" id="nombre_pais" placeholder="Nombre del país" [class.is-valid]="getIsValid(paisForm,'nombre_pais')" [class.is-invalid]="getIsInvalid(paisForm,'nombre_pais')">
+            </div>
+            <div *ngIf="getPropertyHasErrors(paisForm,'nombre_pais')" class="mb-1">
+              <span *ngIf="getPropertyErrors(paisForm,'nombre_pais','required')" class="alert-danger form-control">Ingresar Nombre del país</span>
+              <span *ngIf="getPropertyErrors(paisForm,'nombre_pais','maxlength')" class="alert-danger form-control">Máximo 20 Caracteres</span>
+            </div>
+          </div>
+          <div class="my-3" *ngIf="saveOk['pais']">
+            <span class="alert-success form-control">Los datos se han guardado</span>
+          </div>
+          <div class="text-center my-3">
+            <button class="myBtnGen">Guardar</button>
+          </div>
+          <hr>
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row m-0 p-0">
+    <div class="col-1 text-center m-auto" (click)="showSection(2)">
+      <i class="fa fa-angle-down m-auto" *ngIf="formToShow != 2"></i>
+      <i class="fa fa-angle-up" *ngIf="formToShow == 2"></i>
+    </div>
+    <div class="col-11" (click)="showSection(2)">
+      <span class="appTitle">Registrar Departamento</span><br>
+    </div>
+    <div class="col-12" *ngIf="formToShow == 2">
+      <div class="my-3"  *ngIf="listPais.length == 0">
+        <span class="alert-danger form-control">No hay paises registrados</span>
+      </div>
+      <div class="mt-3"> <!-- FORMULARIO -->
+        <form novalidate [formGroup]="dptoForm" (ngSubmit)="submitAllForm($event, 'dpto')" class="mb-5 px-3 px-sm-0">
+          <div><!-- codigo_depto -->
+            <div class="form-group">
+              <label for="codigo_depto" class="mb-1">Código del departamento</label>
+              <input formControlName="codigo_depto" type="text" class="form-control" id="codigo_depto" placeholder="Código del departamento" [class.is-valid]="getIsValid(dptoForm,'codigo_depto')" [class.is-invalid]="getIsInvalid(dptoForm,'codigo_depto')">
+            </div>
+            <div *ngIf="getPropertyHasErrors(dptoForm,'codigo_depto')" class="mb-1">
+              <span *ngIf="getPropertyErrors(dptoForm,'codigo_depto','required')" class="alert-danger form-control">Ingresar código del departamento</span>
+              <span *ngIf="getPropertyErrors(dptoForm,'codigo_depto','maxlength')" class="alert-danger form-control">Máximo 2 Caracteres</span>
+            </div>
+          </div>
+          <div><!-- codigo_pais -->
+            <div class="form-group">
+              <label for="codigo_pais">Código del país</label><br>
+              <select class="custom-select w-100" formControlName="codigo_pais" id="codigo_pais" [class.is-valid]="getIsValid(dptoForm,'codigo_pais')" [class.is-invalid]="getIsInvalid(dptoForm,'codigo_pais')">
+                <option selected>Seleccione</option>
+                <option *ngFor="let item of listPais" value="{{item.id_pais}}">{{ item.codigo_pais }}-{{item.nombre_pais }}</option>
+              </select>
+            </div>
+            <div *ngIf="getPropertyHasErrors(dptoForm,'codigo_pais')" class="mb-1">
+              <span *ngIf="getPropertyErrors(dptoForm,'codigo_pais','isSelectSelected')" class="alert-danger form-control">Seleccione código del pais</span>
+            </div>
+          </div>
+          <div><!-- nombre_depto -->
+            <div class="form-group">
+              <label for="nombre_depto" class="mb-1">Nombre del departamento</label>
+              <input formControlName="nombre_depto" type="text" class="form-control" id="nombre_depto" placeholder="Nombre del departamento" [class.is-valid]="getIsValid(dptoForm,'nombre_depto')" [class.is-invalid]="getIsInvalid(dptoForm,'nombre_depto')">
+            </div>
+            <div *ngIf="getPropertyHasErrors(dptoForm,'nombre_depto')" class="mb-1">
+              <span *ngIf="getPropertyErrors(dptoForm,'nombre_depto','required')" class="alert-danger form-control">Ingresar Nombre del departamento</span>
+              <span *ngIf="getPropertyErrors(dptoForm,'nombre_depto','maxlength')" class="alert-danger form-control">Máximo 20 Caracteres</span>
+            </div>
+          </div>
+          <div class="my-3" *ngIf="saveOk['dpto']">
+            <span class="alert-success form-control">Los datos se han guardado</span>
+          </div>
+          <div class="text-center my-3">
+            <button class="myBtnGen">Guardar</button>
+          </div>
+          <hr>
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row m-0 p-0">
+    <div class="col-1 text-center m-auto" (click)="showSection(3)">
+      <i class="fa fa-angle-down m-auto" *ngIf="formToShow != 3"></i>
+      <i class="fa fa-angle-up" *ngIf="formToShow == 3"></i>
+    </div>
+    <div class="col-11" (click)="showSection(3)">
+      <span class="appTitle">Registrar Ciudad</span><br>
+    </div>
+    <div class="col-12" *ngIf="formToShow == 3">
+      <div class="my-3"  *ngIf="listDptos.length == 0">
+        <span class="alert-danger form-control">No hay departamentos registrados</span>
+      </div>
+      <div class="mt-3"> <!-- FORMULARIO -->
+        <form novalidate [formGroup]="ciudadForm" (ngSubmit)="submitAllForm($event, 'ciudad')" class="mb-5 px-3 px-sm-0">
+          <div><!-- codigo_ciudad -->
+            <div class="form-group">
+              <label for="codigo_ciudad" class="mb-1">Código de la ciudad</label>
+              <input formControlName="codigo_ciudad" type="text" class="form-control" id="codigo_ciudad" placeholder="Código de la ciudad" [class.is-valid]="getIsValid(ciudadForm,'codigo_ciudad')" [class.is-invalid]="getIsInvalid(ciudadForm,'codigo_ciudad')">
+            </div>
+            <div *ngIf="getPropertyHasErrors(ciudadForm,'codigo_ciudad')" class="mb-1">
+              <span *ngIf="getPropertyErrors(ciudadForm,'codigo_ciudad','required')" class="alert-danger form-control">Ingresar código de la ciudad</span>
+              <span *ngIf="getPropertyErrors(ciudadForm,'codigo_ciudad','maxlength')" class="alert-danger form-control">Máximo 5 Caracteres</span>
+            </div>
+          </div>
+          <div><!-- paisTemp -->
+            <div class="form-group">
+              <label for="paisTemp">País</label><br>
+              <select class="custom-select w-100" formControlName="paisTemp" id="paisTemp" (change)="onChangeSelectLocation(1, $event.target.value)" [class.is-valid]="getIsValid(ciudadForm,'paisTemp')" [class.is-invalid]="getIsInvalid(ciudadForm,'paisTemp')">
+                <option selected>Seleccione</option>
+                <option *ngFor="let item of listPais" value="{{item.id_pais}}">{{ item.codigo_pais }}-{{item.nombre_pais }}</option>
+              </select>
+            </div>
+            <div *ngIf="getPropertyHasErrors(ciudadForm,'paisTemp')" class="mb-1">
+              <span *ngIf="getPropertyErrors(ciudadForm,'paisTemp','isSelectSelected')" class="alert-danger form-control">Seleccione País</span>
+            </div>
+          </div>
+          <div><!-- codigo_depto -->
+            <div class="form-group">
+              <label for="codigo_depto">Departamento</label><br>
+              <select class="custom-select w-100" formControlName="codigo_depto" id="codigo_depto" [class.is-valid]="getIsValid(ciudadForm,'codigo_depto')" [class.is-invalid]="getIsInvalid(ciudadForm,'codigo_depto')">
+                <option selected>Seleccione</option>
+                <option *ngFor="let item of listDptosFiltered" value="{{item.id_depto}}">{{ item.codigo_depto }}-{{item.nombre_depto }}</option>
+              </select>
+            </div>
+            <div *ngIf="getPropertyHasErrors(ciudadForm,'codigo_depto')" class="mb-1">
+              <span *ngIf="getPropertyErrors(ciudadForm,'codigo_depto','isSelectSelected')" class="alert-danger form-control">Seleccione departamento</span>
+            </div>
+          </div>
+          <div><!-- nombre_ciudad -->
+            <div class="form-group">
+              <label for="nombre_ciudad" class="mb-1">Nombre de la ciudad</label>
+              <input formControlName="nombre_ciudad" type="text" class="form-control" id="nombre_ciudad" placeholder="Nombre de la ciudad" [class.is-valid]="getIsValid(ciudadForm,'nombre_ciudad')" [class.is-invalid]="getIsInvalid(ciudadForm,'nombre_ciudad')">
+            </div>
+            <div *ngIf="getPropertyHasErrors(ciudadForm,'nombre_ciudad')" class="mb-1">
+              <span *ngIf="getPropertyErrors(ciudadForm,'nombre_ciudad','required')" class="alert-danger form-control">Ingresar Nombre de la ciudad</span>
+              <span *ngIf="getPropertyErrors(ciudadForm,'nombre_ciudad','maxlength')" class="alert-danger form-control">Máximo 20 Caracteres</span>
+            </div>
+          </div>
+          <div class="my-3" *ngIf="saveOk['ciudad']">
+            <span class="alert-success form-control">Los datos se han guardado</span>
+          </div>
+          <div class="text-center my-3">
+            <button class="myBtnGen">Guardar</button>
+          </div>
+          <hr>
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>
